@@ -1,23 +1,27 @@
 package com.company;
 
-import java.util.InputMismatchException;
 
-public  class Main {
+public class Main {
+
     public static void main(String[] args) throws LimitException {
+
+        BankAccount bankAccount = new BankAccount();
+        bankAccount.deposit(20000);
+        System.out.println("Вы пополнили баланс " + bankAccount.getAmount());
+
         while (true) {
-            BankAccount bankAccount = new BankAccount();
-            bankAccount.deposit(20000);
-            bankAccount.withdraw(6000);
-            bankAccount.withdraw(6000);
-            bankAccount.withdraw(6000);
-            bankAccount.withdraw(6000);
+            try {
+                System.out.println("Ваш текущий баланс составляет: " + bankAccount.getAmount());
+                bankAccount.withdraw(6000);
+                System.out.println("Вы сняли: 6000");
 
-
-            System.out.println("BankAccount имеет баланс " + bankAccount);
-            System.out.println(bankAccount.getBalance());
+            } catch (LimitException limitException) {
+                System.out.println(limitException.getMessage());
+                System.out.println("Вы сняли оставшуюся сумму: " + bankAccount.getAmount());
+                bankAccount.withdraw((int) bankAccount.getAmount());
+                System.out.println("Ваш текущий баланс составляет: " + bankAccount.getAmount());
+                break;
+            }
         }
     }
 }
-
-
-
